@@ -1,18 +1,43 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png">
-    <hello></hello>
-    <p>liuyan</p>
+  	<h1 v-text="title"></h1>
+  	<input v-model="newItem" v-on:keyup.enter="addItem"></input>
+  	<ul>
+  		<li class="pointer" v-for="item in items" v-bind:class="{finished:item.isFinished}" v-on:click="toggleFinish(item)">{{item.label}}</li>
+  	</ul>
   </div>
 </template>
 
 <script>
-import Hello from './components/Hello'
-
 export default {
-  name: 'app',
-  components: {
-    Hello
+  data: function(){
+  	return {
+  		title: 'This is a todo list',
+  		items: [
+  			{
+  				label: 'coding',
+  				isFinished: false
+  			},
+  			{
+  				label: 'walking',
+  				isFinished: true
+  			}
+  		],
+  		newItem: ''
+  		
+  	}
+  },
+  methods: {
+	toggleFinish: function(item){
+		item.isFinished = !item.isFinished;
+	},
+	addItem: function(){
+		this.items.unshift({
+			label: this.newItem,
+  			isFinished: false
+		})
+		this.newItem = '';
+	}
   }
 }
 </script>
@@ -22,8 +47,14 @@ export default {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
+  text-align: left;
   color: #2c3e50;
   margin-top: 60px;
+}
+.finished{
+	text-decoration: line-through;
+}
+.pointer{
+	cursor: pointer;
 }
 </style>
