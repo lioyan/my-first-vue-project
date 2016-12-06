@@ -9,29 +9,30 @@
 </template>
 
 <script>
+import Store from './store'
+console.log(Store)
 export default {
   data: function(){
   	return {
   		title: 'This is a todo list',
-  		items: [
-  			{
-  				label: 'coding',
-  				isFinished: false
-  			},
-  			{
-  				label: 'walking',
-  				isFinished: true
-  			}
-  		],
+  		items: Store.fetch(),
   		newItem: ''
   		
   	}
   },
+  watch: {
+    items: {
+      handler: function(items){
+        Store.save(items)
+      },
+      deep: true
+    }
+  },
   methods: {
-	toggleFinish: function(item){
+	 toggleFinish: function(item){
 		item.isFinished = !item.isFinished;
-	},
-	addItem: function(){
+	 },
+	 addItem: function(){
 		this.items.unshift({
 			label: this.newItem,
   			isFinished: false
