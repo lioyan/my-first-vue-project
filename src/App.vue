@@ -5,12 +5,13 @@
   	<ul>
   		<li class="pointer" v-for="item in items" v-bind:class="{finished:item.isFinished}" v-on:click="toggleFinish(item)">{{item.label}}</li>
   	</ul>
+    <component_msg msgFromFather='you die!'></component_msg>
   </div>
 </template>
 
 <script>
 import Store from './store'
-console.log(Store)
+import Component_msg from './components/component_msg'
 export default {
   data: function(){
   	return {
@@ -20,6 +21,7 @@ export default {
   		
   	}
   },
+  components:{Component_msg},
   watch: {
     items: {
       handler: function(items){
